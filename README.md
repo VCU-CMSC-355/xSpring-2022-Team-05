@@ -15,6 +15,6 @@ a better understanding of the problems you encountered during the developmemnt o
 ## Project Team
 - *Rohan Nair* - *Computer Science* - Student Team Member
 - *Edwin Constancia* - *Computer Science* - Student Team Member
-- *Student's Name* - *major* - Student Team Member
+- *Abtin Ghaffari* - *Computer Science* - Student Team Member
 - *Student's Name* - *major* - Student Team Member
 - *Student's Name* - *major* - Student Team Member
