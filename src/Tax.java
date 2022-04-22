@@ -38,10 +38,34 @@ public class Tax {
         String year = args[0];
         String status = args[1];
         String income = args[2];
+        String tax = null;
+        String line = null;
 
+        //Append argument 2 onto argument 1
+        String yearStatus = year + status + ".txt";
+        args[0] = yearStatus;
+        args[1] = income;
+        String[] tbArgs = {"tb", yearStatus, income};
+        Process proc = Runtime.getRuntime().exec("java -jar service.jar", tbArgs);
+        proc.waitFor();
+        InputStream in = proc.getInputStream();
+        InputStream err = proc.getErrorStream();
+        BufferedReader brInput = new BufferedReader(new InputStreamReader(in));
+        BufferedReader brError = new BufferedReader(new InputStreamReader(err));
+
+        //System.out.println(yearStatus);
+        while ((line = brInput.readLine()) != null) {
+            tax = line;
+        }
+
+        while ((line = brError.readLine()) != null) {
+            System.out.println(line);
+
+        }
         //check for error and if year contains error, throw error command.
-        if (year.length() != 4) {
-            Process proc2 = Runtime.getRuntime().exec("java -jar service.jar error" + year);
+        if (!tax.contains(".")) {
+            String[] errorArgs = {"error", "903"};
+            Process proc2 = Runtime.getRuntime().exec("java -jar service.jar", errorArgs);
             proc2.waitFor();
 
             InputStream in2 = proc2.getInputStream();
@@ -50,40 +74,26 @@ public class Tax {
             BufferedReader br2Error = new BufferedReader(new InputStreamReader(err2));
 
             //System.out.println(yearStatus);
-            String line;
-            while ((line = br2Input.readLine()) != null) {
-                System.out.println(line);
+            String line2;
+            while ((line2 = br2Input.readLine()) != null) {
+                System.out.println(line2);
             }
 
-            while ((line = br2Error.readLine()) != null) {
-                System.out.println(line);
-
-            }
-        } else {
-
-            //Append argument 2 onto argument 1
-            String yearStatus = year + status + ".txt";
-            args[0] = yearStatus;
-            args[1] = income;
-
-            Process proc = Runtime.getRuntime().exec("java -jar service.jar tb", args);
-            proc.waitFor();
-            InputStream in = proc.getInputStream();
-            InputStream err = proc.getErrorStream();
-            BufferedReader brInput = new BufferedReader(new InputStreamReader(in));
-            BufferedReader brError = new BufferedReader(new InputStreamReader(err));
-
-            //System.out.println(yearStatus);
-            String line;
-            while ((line = brInput.readLine()) != null) {
-                System.out.println(line);
-            }
-
-            while ((line = brError.readLine()) != null) {
-                System.out.println(line);
+            while ((line2 = br2Error.readLine()) != null) {
+                System.out.println(line2);
 
             }
         }
 
+        System.out.println(taxCalculator(yearStatus, income, tax));
+
+    }
+
+    public static double taxCalculator(String yearStatus, String income, String tax) throws IOException, InterruptedException {
+        //This method calculates the income after tax.
+        double doubleTax = Double.parseDouble(tax);
+        double doubleIncome = Double.parseDouble(income);
+        double taxIncome = doubleTax * doubleIncome;
+        return taxIncome;
     }
 }
