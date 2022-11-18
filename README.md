@@ -3,7 +3,7 @@
 This application returns the user’s taxed income rate based on the user’s tax bracket and year, translates the 
 user’s tax information into German, Spanish, and French, and finally returns the appropriate error message when necessary. 
 This application was developed using multiple service and text brokers and was completed in collaboration with Virginia 
-Commonwealth University
+Commonwealth University.
 
 | Folder | Description |
 |---|---|
